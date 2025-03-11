@@ -1,0 +1,156 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "checkNode",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "messageHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint8",
+						"name": "v",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "s",
+						"type": "bytes32"
+					}
+				],
+				"name": "checkOnline",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "messageHash",
+						"type": "bytes32"
+					}
+				],
+				"name": "getEthSignedMessageHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "signer",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "messageHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint8",
+						"name": "v",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "s",
+						"type": "bytes32"
+					}
+				],
+				"name": "verify",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/check.sol": "Checker"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/check.sol": {
+			"keccak256": "0xcd1ef805645c7626aa231c900fa6f19c3234c4d868e85bcb4345950473b5eab6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6484f5f8ba90352be295ee1ac89e84aded2e62cf02cdf63601cf700d306c3f5f",
+				"dweb:/ipfs/QmR2bmMh3HAJX5oCaUYuAU5tk2hXXkdAw55MPDynyLMb1P"
+			]
+		}
+	},
+	"version": 1
+}
