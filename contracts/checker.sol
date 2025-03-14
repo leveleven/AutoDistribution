@@ -33,4 +33,11 @@ contract Checker {
         checkNode[msg.sender].push(true);
     }
 
+    function checkPass(address _address) public view returns (uint) {
+        return checkNode[_address].length;
+    }
+
+    function resetChecker(address _address) public {
+        delete checkNode[_address];
+    }
 }

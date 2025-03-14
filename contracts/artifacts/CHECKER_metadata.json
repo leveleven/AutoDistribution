@@ -9,11 +9,11 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "account",
+						"name": "_address",
 						"type": "address"
 					}
 				],
-				"name": "balanceOf",
+				"name": "checkPass",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -25,68 +25,15 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "decimals",
-				"outputs": [
-					{
-						"internalType": "uint8",
-						"name": "",
-						"type": "uint8"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "recipient",
+						"name": "_address",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
 					}
 				],
-				"name": "transfer",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "sender",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "recipient",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "transferFrom",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
+				"name": "resetChecker",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			}
@@ -104,7 +51,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/test.sol": "IERC20"
+			"contracts/test.sol": "CHECKER"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},

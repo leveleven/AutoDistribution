@@ -60,6 +60,25 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "checkPass",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "bytes32",
 						"name": "messageHash",
 						"type": "bytes32"
@@ -74,6 +93,19 @@
 					}
 				],
 				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "resetChecker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -129,7 +161,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/check.sol": "Checker"
+			"contracts/checker.sol": "Checker"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -143,12 +175,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/check.sol": {
-			"keccak256": "0xcd1ef805645c7626aa231c900fa6f19c3234c4d868e85bcb4345950473b5eab6",
+		"contracts/checker.sol": {
+			"keccak256": "0x2684aad20e3268af0d4ae8d878f2e04f12d9d0b93499a89322c2b758c3052d4d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6484f5f8ba90352be295ee1ac89e84aded2e62cf02cdf63601cf700d306c3f5f",
-				"dweb:/ipfs/QmR2bmMh3HAJX5oCaUYuAU5tk2hXXkdAw55MPDynyLMb1P"
+				"bzz-raw://ae6bb123c858a3d5e9d9cfa557fced46ea680c1b9f80da3ca3bc670bac2721bb",
+				"dweb:/ipfs/QmRK9oaemGFRfk98zSNmJAeFHyS2U4FJGSwEpCa7Kabgyb"
 			]
 		}
 	},

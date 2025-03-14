@@ -351,11 +351,11 @@
 	},
 	"sources": {
 		"contracts/TestToken.sol": {
-			"keccak256": "0x543a3de96af996aeeb57746645c6bdecaebb503e6ff739ddc992df022bb1122d",
-			"license": "GPL-3.0",
+			"keccak256": "0x3a71ab69a2cca1beefdc1b7d9041243a79073d35fd365c70e163567a47b4c5f7",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://f1b32b6fc5305906ce25bfc1be8f5081c322ca83683488e26548eac0d0452c3c",
-				"dweb:/ipfs/QmVuVKksSFyCt8vJAJy2gRnU9SLpdcTFpoCfCCSp3zo19K"
+				"bzz-raw://28047b51dc64d82b7a27489c25c78428b7ba0e08e6fe45f804cd92e4331eef50",
+				"dweb:/ipfs/QmYAtvNHwdPSuFY7aDe1WyyhmKE2e6JBW48vETYvnELEPT"
 			]
 		}
 	},

@@ -8,10 +8,17 @@ interface IERC20 {
     function decimals() external view returns (uint8);
 }
 
+interface CHECKER {
+    function checkPass(address _address) external view returns (uint);
+    function resetChecker(address _address) external;
+}
+
 contract AutoDistribution {
     IERC20 public token;
+    CHECKER public checker;
+    
     address public owner;
-    uint256 public onlineReward = 60 * token.decimals(); // 在线奖励
+    uint256 public onlineReward = 60; // 在线奖励
     uint256 public roundUnlock = (onlineReward * 70) / 100 / 180;  // 每轮释放
 
     uint256 public lastDistributionBlock;
@@ -22,7 +29,7 @@ contract AutoDistribution {
     struct LockInfo {
         uint256 totalAmount;
         uint256 startBlock;       // 锁仓释放
-        // uint256 lastClaimedBlock; // 线性释放
+        uint256 lastClaimedBlock; // 线性释放
         bool isUnlocked;
     }
 
@@ -42,8 +49,9 @@ contract AutoDistribution {
         _;
     }
 
-    constructor(address _token) {
+    constructor(address _token, address _checker) {
         token = IERC20(_token);
+        checker = CHECKER(_checker);
         owner = msg.sender;
         lastDistributionBlock = block.number;
     }
@@ -63,16 +71,17 @@ contract AutoDistribution {
         lastDistributionBlock = block.number;
         for (uint256 i = 0; i < recipients.length; i++) {
             address recipient = recipients[i];
-            // if (checkNode[recipient].length >= 3) {
+            if (checker.checkPass(recipient) >= 3) {
                 uint256 initialAmount = (onlineReward * 30) / 100;
                 lockedBalances[recipient].unlockedAmount += initialAmount;
                 lockedBalances[recipient].lockInfo.push(LockInfo({
                     totalAmount: onlineReward - initialAmount,
                     startBlock: lastDistributionBlock,         // 锁仓释放
-                    // lastClaimedBlock: lastDistributionBlock,   // 线性释放
+                    lastClaimedBlock: lastDistributionBlock,   // 线性释放
                     isUnlocked: false
                 }));
-            // }
+            }
+            checker.resetChecker(recipient);
         }
     }
 
@@ -94,35 +103,35 @@ contract AutoDistribution {
     }
 
     // 线性释放 （测试）
-    // function claimReleaseTokens(address _rewardAddress) public {
-    //     require(bindingWallets[_rewardAddress] == msg.sender, "No binding");
-    //     Reward storage reward = lockedBalances[_rewardAddress];
-    //     require(reward.lockInfo.length > 0, "No locked tokens");
+    function claimReleaseTokens(address _rewardAddress) public {
+        require(bindingWallets[_rewardAddress] == msg.sender, "No binding");
+        Reward storage reward = lockedBalances[_rewardAddress];
+        require(reward.lockInfo.length > 0, "No locked tokens");
 
-    //     for (uint256 i = 0; i < reward.lockInfo.length; i++) {
-    //         if (!reward.lockInfo[i].isUnlocked) {
-    //             uint256 elapsedBlocks;
-    //             if (block.number - reward.lockInfo[i].startBlock >= LOCK_BLOCKS) {
-    //                 elapsedBlocks = reward.lockInfo[i].startBlock + LOCK_BLOCKS - reward.lockInfo[i].lastClaimedBlock;
-    //             } else {
-    //                 elapsedBlocks = block.number - reward.lockInfo[i].lastClaimedBlock;
-    //             }
-    //             require(elapsedBlocks >= DISTRIBUTION_BLOCK_INTERVAL, "Not yet reached next unlock point");
+        for (uint256 i = 0; i < reward.lockInfo.length; i++) {
+            if (!reward.lockInfo[i].isUnlocked) {
+                uint256 elapsedBlocks;
+                if (block.number - reward.lockInfo[i].startBlock >= LOCK_BLOCKS) {
+                    elapsedBlocks = reward.lockInfo[i].startBlock + LOCK_BLOCKS - reward.lockInfo[i].lastClaimedBlock;
+                } else {
+                    elapsedBlocks = block.number - reward.lockInfo[i].lastClaimedBlock;
+                }
+                require(elapsedBlocks >= DISTRIBUTION_BLOCK_INTERVAL, "Not yet reached next unlock point");
 
-    //             uint256 unlockRounds = elapsedBlocks / DISTRIBUTION_BLOCK_INTERVAL;
-    //             uint256 unlockReward = unlockRounds * roundUnlock;
-    //             if (unlockReward < reward.lockInfo[i].totalAmount) {
-    //                 reward.unlockedAmount += unlockReward;
-    //                 reward.lockInfo[i].totalAmount -= unlockReward;
-    //                 reward.lockInfo[i].lastClaimedBlock += unlockRounds * DISTRIBUTION_BLOCK_INTERVAL;
-    //             } else {
-    //                 reward.unlockedAmount += reward.lockInfo[i].totalAmount;
-    //                 reward.lockInfo[i].totalAmount = 0;
-    //                 reward.lockInfo[i].isUnlocked = true;
-    //             }
-    //         }
-    //     }
-    // }
+                uint256 unlockRounds = elapsedBlocks / DISTRIBUTION_BLOCK_INTERVAL;
+                uint256 unlockReward = unlockRounds * roundUnlock;
+                if (unlockReward < reward.lockInfo[i].totalAmount) {
+                    reward.unlockedAmount += unlockReward;
+                    reward.lockInfo[i].totalAmount -= unlockReward;
+                    reward.lockInfo[i].lastClaimedBlock += unlockRounds * DISTRIBUTION_BLOCK_INTERVAL;
+                } else {
+                    reward.unlockedAmount += reward.lockInfo[i].totalAmount;
+                    reward.lockInfo[i].totalAmount = 0;
+                    reward.lockInfo[i].isUnlocked = true;
+                }
+            }
+        }
+    }
 
     // 提款
     function withdraw(address _rewardAddress) public {
@@ -139,7 +148,7 @@ contract AutoDistribution {
         require(newLockPeriod > 0, "Lock period must be positive");
     }
 
-    // 提前解锁 30%，其余 70% 作为惩罚回归合约
+    // 提前解锁 30%，其余 70% 作为惩罚回归合约 （提前解锁规则待定）
     function earlyUnlock(address _rewardAddress) public {
         require(bindingWallets[_rewardAddress] == msg.sender, "No binding");
         Reward storage reward = lockedBalances[_rewardAddress];
